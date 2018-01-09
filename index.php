@@ -1,5 +1,5 @@
 <?php include 'include/config.php';?>
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -11,14 +11,19 @@
 <title><?php echo PROJECT_TITLE;?></title>
 <!-- Bootstrap Core CSS -->
 <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">  
+<link href="plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">
 <!-- animation CSS -->
 <link href="css/animate.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="css/style.css" rel="stylesheet">
 <!-- color CSS -->
 <link href="css/colors/default.css" id="theme"  rel="stylesheet">
-
+<style>
+.error
+{
+  color: #FF0000;
+}
+</style>
 </head>
 <body>
 <!-- Preloader -->
@@ -28,16 +33,16 @@
 <section id="wrapper" class="login-register">
   <div class="login-box">
     <div class="white-box">
-      <form class="form-horizontal form-material" id="loginform" action="">
+      <form class="form-horizontal form-material" id="loginform" action="#">
         <h3 class="box-title m-b-20">Sign In</h3>
         <div class="form-group ">
           <div class="col-xs-12">
-            <input class="form-control" type="text" required="" placeholder="Username">
+            <input class="form-control" type="text" name="adminEmail" id="adminEmail" placeholder="E-mail">
           </div>
         </div>
         <div class="form-group">
           <div class="col-xs-12">
-            <input class="form-control" type="password" required="" placeholder="Password">
+            <input class="form-control" type="password" name="adminPass" id="adminPass" placeholder="Password">
           </div>
         </div>
         <!-- <div class="form-group">
@@ -64,7 +69,7 @@
           </div>
         </div> -->
       </form>
-      <form class="form-horizontal" id="recoverform" action="http://eliteadmin.themedesigner.in/demos/eliteadmin-inverse/index.html">
+     <!--  <form class="form-horizontal" id="recoverform" action="#">
         <div class="form-group ">
           <div class="col-xs-12">
             <h3>Recover Password</h3>
@@ -81,7 +86,7 @@
             <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
           </div>
         </div>
-      </form>
+      </form> -->
     </div>
   </div>
 </section>
@@ -102,7 +107,62 @@
 <script src="js/custom.min.js"></script>
 <!--Style Switcher -->
 <script src="plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+<script src="js/validation.js"></script>
+<script>
+$(document).ready(function(){
+    /*Login validation*/
+    $("#loginform").validate({
+      rules:{
+        adminEmail:{
+          required:true,
+          email:true
+        },
+        adminPass:
+        {
+          required:true
+
+        }
+      },
+      messages:{
+        adminEmail:{
+          required:"The email address is required.",
+          email:"The email address is invalid."
+        },
+      adminPass:
+      {
+        required:"The Password field is required."
+
+      }
+      }
+      ,
+      submitHandler: function(form) {
+        var userEmail=$("#adminEmail").val();
+        var userPassword=$("#adminPass").val();
+        $.post("ajax/ajax.php",{
+          q:"login",
+          email:userEmail,
+          pass:userPassword,
+          },
+          function(data){
+           dat=data.split('^');
+            if(dat[1]==200)
+            {
+            window.location.href="<?php echo BASE_PATH;?>dashboard";
+            }
+            else 
+            {
+              toastr.options = {"debug": false,  "positionClass": "toast-top-right",  "onclick": null,  "fadeIn": 300,  "fadeOut": 100,  "timeOut": 5000,  "extendedTimeOut": 1000}  
+              toastr.error(dat[2], "Error!");
+            }
+          }
+        );
+
+      }
+    });
+});
+</script>
 </body>
 
-<!-- Mirrored from eliteadmin.themedesigner.in/demos/eliteadmin-inverse/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Dec 2017 06:04:09 GMT -->
 </html>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">

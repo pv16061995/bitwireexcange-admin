@@ -9,3 +9,4 @@ RewriteRule ^userdetail?$ userdetail.php
 RewriteRule ^home?$ index.php
 RewriteRule ^logout?$ logout.php
 RewriteRule ^viewuserdetail?$ viewuserdetail.php
+RewriteRule ^market?$ market.php

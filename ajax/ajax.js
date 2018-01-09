@@ -229,3 +229,62 @@ function viewmysuccessorderlist(email)
 		}
 		);
 }
+
+
+function viewmysuccessorderlist(email)
+{
+	//$('#userbalancelist').html('<img src="images/loader.gif" class="img-responsive" style="margin-left: 35%;">');
+	$('#overlay').show();
+	$.post("ajax/ajax.php",{
+		email:email,
+		q:"viewmysuccessorderlist"
+		},
+		function(data){
+
+		$('#userbalancelist').html(data);
+		$('#myTable1').dataTable({
+		"sPaginationType": "full_numbers"
+		});
+		$('#myTable2').dataTable({
+		"sPaginationType": "full_numbers"
+		});
+		currencydetailshow('1');
+		$('[data-toggle=tooltip]').tooltip();
+		$('[data-toggle=modal]').tooltip();
+		$('#overlay').hide();
+		}
+		);
+}
+
+function getCurrencytList()
+{
+	//$('#userbalancelist').html('<img src="images/loader.gif" class="img-responsive" style="margin-left: 35%;">');
+	$('#overlay').show();
+	$.post("ajax/ajax.php",{
+		q:"viewmyorderCurrencylist"
+		},
+		function(data){
+
+		$('#allCurrencyList').html(data);
+		// $('#myTable1').dataTable({
+		// "sPaginationType": "full_numbers"
+		// });
+		// $('#myTable2').dataTable({
+		// "sPaginationType": "full_numbers"
+		// });
+		// currencydetailshow('1');
+		// $('[data-toggle=tooltip]').tooltip();
+		// $('[data-toggle=modal]').tooltip();
+		$('#overlay').hide();
+		}
+		);
+}
+
+function maketcurrenypass(curr)
+{
+	var	data=curr.split('/');
+	$('#sub_curr').val(data[0].substr(0,3));
+	$('#main_curr').val(data[1]);
+	$(".curr_sub").text(data[0]);
+	$(".curr_main").text(data[1]);
+}

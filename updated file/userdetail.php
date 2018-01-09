@@ -1,6 +1,4 @@
-<?php include 'include/config.php';
-include 'ajax/controls.php';
-?>
+<?php include 'include/config.php';?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +22,7 @@ include 'ajax/controls.php';
     <link href="css/style.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
-   
+
 </head>
 
 <body class="fix-sidebar">
@@ -36,8 +34,8 @@ include 'ajax/controls.php';
         <?php include 'include/top_menu.php';?>
        <?php include 'include/left_side_menu.php';?>
         <!-- Top Navigation -->
-        
-        
+
+
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
@@ -63,14 +61,14 @@ include 'ajax/controls.php';
                            <!--  <p class="text-muted m-b-30">Data table example</p> -->
                            <div id="overlay"></div>
                             <div class="table-responsive" id="reload">
-                                
+
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <!-- /.row -->
-              
+
             </div>
             <!-- /.container-fluid -->
            <?php include 'include/footer.php';?>
@@ -106,7 +104,7 @@ include 'ajax/controls.php';
     $(document).ready(function() {
         $('#myTable').DataTable();
         userdetail();
-           });
+        });
         $(document).ready(function() {
             var table = $('#example').DataTable({
                 "columnDefs": [{
@@ -147,14 +145,11 @@ include 'ajax/controls.php';
                 }
             });
         });
-
-
- 
     $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip(); 
-    $('[data-toggle="modal"]').tooltip(); 
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="modal"]').tooltip();
 });
- 
+
     </script>
 <script src="plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
 <script src="ajax/ajax.js"></script>
@@ -167,10 +162,9 @@ include 'ajax/controls.php';
 }
 .modal-dialog {
     max-width: 1200px;
-    
+
 }
 .closepop{
     display:none !important;
 }
 </style>
-

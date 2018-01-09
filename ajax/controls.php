@@ -435,9 +435,44 @@ class controls
 	    return $response;
 	}
 
+	public function orderBookBidFetch($sub_curr,$main_curr)
+	{
+				$url_api=URL_API;
+         $response = file_get_contents($url_api.'trademarket'.strtolower($main_curr.$sub_curr).'/getAllBid'.$sub_curr);
+         return $response;
+	}
+
+	public function orderBookAskFetchData($sub_curr,$main_curr)
+	{
+		$url_api=URL_API;
+		 $response = file_get_contents($url_api.'trademarket'.strtolower($main_curr.$sub_curr).'/getAllAsk'.$sub_curr);
+		 return $response;
+	}
+
+	public function userlogin($email_id,$password)
+	{
+		$url_api=URL_API;
+	    $postData = array(
+	   		"email" => $email_id,
+	        "password" => $password
+	  	);
+	    $context = stream_context_create(array(
+		  'http' => array(
+		    'method' => 'POST',
+		    'header' => "Content-Type: application/json\r\n",
+		    'content' => json_encode($postData)
+		    )
+		  ));
+		$response = file_get_contents($url_api.'auth/authentcate', true, $context);
+		return $response;
+	}
 
 
 }
+
+
+
+
 
 
 

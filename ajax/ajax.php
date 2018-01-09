@@ -39,6 +39,23 @@ else if($_POST['q']=='userfreezedunfreezed')
 }else if($_POST['q']=='viewmysuccessorderlist')
 {
 	viewmysuccessorderlist();
+}elseif($_POST['q']=="viewmyorderCurrencylist")
+{
+	fetchmyordercurrencylist();
+}
+elseif($_POST['q']=="orderBookBid")
+{
+	orderBookBid();
+}
+elseif($_POST['q']=="orderBookAsk") {
+	orderBookAskFetch();
+}
+elseif($_POST['q']=="orderBook")
+{
+	fetchAllOrder();
+}elseif($_POST['q']=='login')
+{
+	login();
 }
 
 
@@ -495,4 +512,184 @@ function currencybasedmysuccessorder()
    echo $detail;
 
 }
+
+
+
+function fetchmyordercurrencylist()
+{
+	$obj=NEW allapi();
+$data=$obj->getallcategory();
+$result=json_decode($data);
+$datasub=$obj->getallSubcategory();
+$subcat=json_decode($datasub, true);
+$detail='';
+$i=1;
+$detail .='<div class="panel panel-default">
+							<div class="panel-body" style="padding-top:10px;">
+									<ul class="nav nav-pills m-b-30 ">';
+					foreach($result as $cat) {
+					$detail .='<li class="nav-item">
+										<a href="javascript:;" class="nav-link';if($i==1){$detail .=' active';}
+					$detail .='" data-toggle="tab" onclick="currencydetailshow(\''.$cat->id.'\');">'.$cat->name.'</a> </li>';
+				$i++;}
+
+					$detail .='</ul><div class="tab-content br-n pn">';
+					$detail .= '<table class="table table-striped table-bordered table color-bordered-table warning-bordered-table">
+				<thead>
+						<tr>
+								<th>Currency Name</th>
+
+						</tr>
+				</thead>
+				<tbody>';
+
+				foreach($result as $cat) {
+					$detail .='<tbody id="navpills-'.$cat->id.'" class="tab-pane subcatgoryhide">';
+					foreach($subcat[$cat->id]['subcat'] as $subcatgory)
+		{
+					$detail .='
+					<tr>
+			<td><a href="'.BASE_PATH.'market?curr='.base64_encode($subcatgory).'">'.$subcatgory.'</a></td>
+		</tr>';
+					}
+					$detail .='</tbody>';
+				}
+
+									 $detail .='</table></div>
+													</div>';
+
+				echo $detail;
+}
+
+
+function orderBookBid()
+	{
+		$i=0;
+		$sub_curr=$_POST['sub_curr'];
+		$main_curr=$_POST['main_curr'];
+		$obj=NEW controls();
+	  $response=$obj->orderBookBidFetch($sub_curr,$main_curr);
+	 $responseData = json_decode($response, true);
+	 // echo "<pre>";
+	 // print_r($responseData);
+	 // echo "</pre>";
+		$detail='';
+			$detail .='<p>Total BID  <span class="curr_sub">'.$sub_curr.'</span> '.$responseData['bidAmount'.$sub_curr.'Sum'].'</p>
+			<p>Total BID <span class="curr_main">'.$main_curr.'</span>  '.$responseData['bidAmount'.$main_curr.'Sum'].'</p>
+			<table class="table color-table info-table">
+							<thead>
+									<tr>
+											<th>Bid</th>
+											<th>Amount</th>
+											<th>Price</th>
+											<th>Total('.$main_curr.')</th>
+									</tr>
+							</thead>
+							<tbody>';
+							foreach ($responseData['bids'.$sub_curr] as $bidsValue) {
+								$detail .='<tr>
+										<td>BID</td>
+										<td>'.$bidsValue['bidAmount'.$sub_curr].'</td>
+										<td>'.$bidsValue['bidRate'].'</td>
+										<td>'.$bidsValue['bidAmount'.$main_curr].'</td>
+								</tr>';
+							$i++;}
+								$detail .='</tbody>
+					</table>';
+
+			echo $detail;
+	}
+
+	function orderBookAskFetch()
+	{
+		$i=0;
+		$sub_curr=$_POST['sub_curr'];
+		$main_curr=$_POST['main_curr'];
+		$obj=NEW controls();
+	  $response=$obj->orderBookAskFetchData($sub_curr,$main_curr);
+	 $responseData = json_decode($response, true);
+	 // echo "<pre>";
+	 // print_r($responseData);
+	 // echo "</pre>";
+		$detail='';
+			$detail .='<p>Total ASK  <span class="curr_sub">'.$sub_curr.'</span> '.$responseData['askAmount'.$sub_curr.'Sum'].'</p>
+			<p>Total ASK <span class="curr_main">'.$main_curr.'</span>  '.$responseData['askAmount'.$main_curr.'Sum'].'</p>
+			<table class="table color-table info-table">
+							<thead>
+									<tr>
+											<th>Ask</th>
+											<th>Amount</th>
+											<th>Price</th>
+											<th>Total('.$main_curr.')</th>
+									</tr>
+							</thead>
+							<tbody>';
+							foreach ($responseData['asks'.$sub_curr] as $bidsValue) {
+								$detail .='<tr>
+										<td>ASK</td>
+										<td>'.$bidsValue['askAmount'.$sub_curr].'</td>
+										<td>'.$bidsValue['askRate'].'</td>
+										<td>'.$bidsValue['askAmount'.$main_curr].'</td>
+								</tr>';
+							$i++;}
+								$detail .='</tbody>
+					</table>';
+
+			echo $detail;
+	}
+
+	function fetchAllOrder()
+	{
+		$i=0;
+		$sub_curr=$_POST['sub_curr'];
+		$main_curr=$_POST['main_curr'];
+		$email=$_POST['email'];
+	 $obj=NEW controls();
+	 $response=$obj->viewbalanceallcurrency($email);
+	 $responseData = json_decode($response, true);
+	 echo "<pre>";
+	 print_r($responseData);
+	 echo "</pre>";
+		$detail='';
+			$detail .='<table class="table color-table success-table">
+							<thead>
+									<tr>
+											<th>ORDER DATE</th>
+											<th>BID/ASK</th>
+											<th>UNITS '.$sub_curr.'</th>
+											<th>ACTUAL RATE</th>
+											<th>UNITS TOTAL '.$sub_curr.'</th>
+											<th>UNITS TOTAL '.$main_curr.'</th>
+											<th>ACTION</th>
+									</tr>
+							</thead>
+							<tbody>';
+							foreach ($responseData['asks'.$sub_curr] as $bidsValue) {
+								$detail .='<tr>
+										<td>ASK</td>
+										<td>'.$bidsValue['askAmount'.$sub_curr].'</td>
+										<td>'.$bidsValue['askRate'].'</td>
+										<td>'.$bidsValue['askAmount'.$main_curr].'</td>
+										<td>'.$bidsValue['askAmount'.$sub_curr].'</td>
+										<td>'.$bidsValue['askRate'].'</td>
+										<td>'.$bidsValue['askAmount'.$main_curr].'</td>
+								</tr>';
+							$i++;}
+								$detail .='</tbody>
+					</table>';
+
+			echo $detail;
+	}
+
+	function login()
+	{
+		$email=$_POST['email'];
+		$pass=$_POST['pass'];
+
+		$obj=NEW controls();
+		$respose=$obj->userlogin($email,$pass);
+		$responseData=json_decode($respose,true);
+        echo 'detail^'.$responseData['statusCode'].'^'.$responseData['message'].'^detail';
+
+	}
 ?>
