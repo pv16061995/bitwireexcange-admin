@@ -1,4 +1,6 @@
-<?php include 'include/config.php';?>
+<?php include 'include/config.php';
+include 'ajax/controls.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 

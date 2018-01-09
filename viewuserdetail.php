@@ -1,4 +1,5 @@
 <?php include 'include/config.php';
+include 'ajax/controls.php';
 
 if(isset($_GET['uid']))
 {

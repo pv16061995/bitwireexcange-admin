@@ -1,3 +1,9 @@
+ <?php 
+$obj = NEW controls();
+$countuser=$obj->getallusercount();
+$datacountuser = json_decode($countuser,true);
+
+ ?>
  <!-- Left navbar-header -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
@@ -17,16 +23,16 @@
                     </div>
                 </div>
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-                        <!-- input-group -->
+                   <!--  <li class="sidebar-search hidden-sm hidden-md hidden-lg">
+                        
                         <div class="input-group custom-search-form">
                             <input type="text" class="form-control" placeholder="Search...">
                             <span class="input-group-btn">
             <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
             </span> </div>
-                        <!-- /input-group -->
-                    </li>
-                  <!--   <li class="nav-small-cap m-t-10">--- Main Menu</li> -->
+                       
+                    </li> -->
+                  <!--   <li class="nav-small-cap m-t-10">- Main Menu</li> -->
                    <!-- <li> <a href="<?php echo BASE_PATH;?>dashboard" class="waves-effect active">
                         <i class="linea-icon linea-basic fa-fw" data-icon="v">
                             
@@ -48,18 +54,34 @@
                      <li> <a href="<?php echo BASE_PATH;?>userdetail" class="waves-effect active">
                         <i class="fa fa-users fa-fw" data-icon="v">
                             
-                        </i> <span class="hide-menu"> User Details <span class="label label-rouded label-danger pull-right">7</span> <span class="fa arrow"> </span>
+                        </i> <span class="hide-menu"> User Details <span class="label label-rouded label-danger pull-right"><?php print_r(count($datacountuser['users']));?></span> <span class="fa arrow"> </span>
                         </a>
                        
                     </li>
 
-                     <li> <a href="<?php echo BASE_PATH;?>userdetail" class="waves-effect active">
+                     <li> <a href="<?php echo BASE_PATH;?>market" class="waves-effect active">
                         <i class="fa fa-line-chart  fa-fw" data-icon="v">
                             
                         </i> <span class="hide-menu"> Market </span>
                         </a>
                        
                     </li>
+
+                      <!--  <li> <a href="<?php echo BASE_PATH;?>market" class="waves-effect active">
+                        <i class="linea-icon linea-basic fa-fw" data-icon="v">
+                            
+                        </i> <span class="hide-menu"> Market <span class="fa arrow"></span>
+                        </a>
+                         <ul class="nav nav-second-level">
+                            <li> <a href="<?php echo BASE_PATH;?>market">Bid/Ask</a> </li>
+                            <li> <a href="<?php echo BASE_PATH;?>markethis">Bid/Ask History</a> </li>
+                            <li> <a href="index3.html">Analitical</a> </li>
+                            <li> <a href="index4.html">Simpler</a> </li>
+                        </ul>
+                    </li> -->
+
+
+
 
                      <li> <a href="<?php echo BASE_PATH;?>logout" class="waves-effect active">
                         <i class="fa fa-sign-out fa-fw" data-icon="v">

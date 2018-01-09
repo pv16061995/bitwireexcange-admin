@@ -411,6 +411,30 @@ class controls
 	}
 
 
+	public function getallusercount()
+	{
+		$url_api=URL_API;
+        
+	    $response = file_get_contents($url_api.'admin/getAllUsers');
+	    return $response;
+	}
+	
+	public function getallcurrencybalances()
+	{
+		$url_api=URL_API;
+        
+	    $response = file_get_contents($url_api.'admin/getCurrenciesDetails');
+	    return $response;
+	}
+
+	public function getalltickets()
+	{
+		$url_api=URL_API;
+        
+	    $response = file_get_contents($url_api.'ticket/getAllTickets');
+	    return $response;
+	}
+
 
 
 }

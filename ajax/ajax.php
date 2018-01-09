@@ -103,7 +103,7 @@ function userdetail()
 	    }
 
 
-	    $detail .= '<a href="javascript:;" class="btn btn-info"  data-toggle="tooltip" title="History"><i class="fa fa-sticky-note "></i> </a>&nbsp;&nbsp;&nbsp;';
+	    //$detail .= '<a href="javascript:;" class="btn btn-info"  data-toggle="tooltip" title="History"><i class="fa fa-sticky-note "></i> </a>&nbsp;&nbsp;&nbsp;';
 
 	    //$detail .= '<a href="javascript:;" class="btn btn-primary"  data-toggle="modal" title="Detail" data-target="#userdetail" onclick="viewuserdetail(\''.$data['email'].'\');"><i class="fa fa-book "></i> </a>&nbsp;&nbsp;&nbsp;';
 
